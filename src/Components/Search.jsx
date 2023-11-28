@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import { feedQuery, searchQuery } from '../utils/data';
-import MasonryLayout from './MasonryLayout';
 import { client } from '../client';
-import Spinner from './Spinner';
+import { MasonSkeleton, MasonryLayout } from '../Components';
+
 
 const Search = ({ searchTerm }) => {
 const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ useEffect(() => {
 
   return (
     <div>
-      {loading && <Spinner message="Searching for pins..." />}
+      {loading && <MasonSkeleton />}
       {pins?.length !== 0 && <MasonryLayout pins={pins} />}
       {pins?.length === 0 && searchTerm !== '' && !loading && (
        <div className='flex flex-col justify-center items-center h-screen'>

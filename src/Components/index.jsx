@@ -8,7 +8,7 @@ import Navbar from "./Navbar";
 import PinDetail from "./PinDetail";
 import Search from "./Search";
 import MasonryLayout from "./MasonryLayout";
-import Spinner from "./Spinner";
+import MasonSkeleton from "./MasonSkeleton";
 
 
 export {
@@ -16,7 +16,7 @@ export {
     UserProfile,
     Pins,
     MasonryLayout,
-    Spinner,
+    MasonSkeleton,
     Sidebar,
     PinDetail,
     Navbar,

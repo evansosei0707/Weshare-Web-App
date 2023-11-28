@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { searchQuery, feedQuery } from '../utils/data'
 import { client } from '../client'
-import Spinner from './Spinner'
-import MasonryLayout from './MasonryLayout'
+import { MasonSkeleton, MasonryLayout } from '../Components';
 
 
 const Feed = () => {
@@ -33,7 +32,7 @@ const Feed = () => {
         }
     }, [categoryId])
 
-    if (loading) return <Spinner message="We are adding new ideas to your feed!" />
+    if (loading) return <MasonSkeleton />
   return (
     <div>
         {pins?.length > 0 ? ( 

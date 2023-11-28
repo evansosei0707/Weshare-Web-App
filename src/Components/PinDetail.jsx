@@ -4,9 +4,8 @@ import { Link, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 import { client, urlFor } from '../client'
-import MasonryLayout from './MasonryLayout'
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data'
-import Spinner from './Spinner';
+import { MasonSkeleton, MasonryLayout } from '../Components';
 
 
 const PinDetail = ({ user }) => {
@@ -65,7 +64,7 @@ const PinDetail = ({ user }) => {
     fetchPinDetails();
   }, [pinId]);
 
-    if(!pinDetail) return <Spinner message="Loading pin..." />
+    if(!pinDetail) return <MasonSkeleton />
 
     
   return (
@@ -112,10 +111,11 @@ const PinDetail = ({ user }) => {
               <p className='mt-3'>{pinDetail.about}</p>
             </div>
           
-          <h1 className='mt-5 text-2xl text-gray-500'> Comments :</h1>
+          <h1 className='mt-5 text-2xl text-gray-500'> {pinDetail?.comments?.length ? 'Comments:' : 'Comment here:'}</h1>
+          {pinDetail?.comments?.length > 0 && ( 
           <div className='max-h-370 xl:max-h-[100px] flex flex-col px-2 overflow-y-auto border-2 rounded-lg pb-3'>
             {pinDetail?.comments?.map((comment, i) => (
-              <Link to={`/user-profile/${pinDetail?.postedBy?._id}`}>
+              <Link key={i} to={`/user-profile/${pinDetail?.postedBy?._id}`}>
                 <div className='flex gap-2 items-center mt-5 bg-white rounded-lg mb-1' key={i} >
                   <img
                     src={comment.postedBy.image}
@@ -128,44 +128,46 @@ const PinDetail = ({ user }) => {
                   {comment.comment}
                 </div>
               </Link>
-
             ))}
-          </div>
+          </div> 
+          )}
           <div className='flex flex-wrap mt-6 gap-3'>
-          <Link 
-              to={`/user-profile/${user?._id}`}
-              className='flex gap-2 items-center justify-start bg-gray-100 max-w-max p-3 rounded-full mb-4'
-          >
-            {user ? (
-              <img 
-                  className='w-8 h-8 cursor-pointer rounded-full object-contain'
-                  src={user?.image}
-                  alt='user-profile'
-              />
-            ) : (
-              <span className='w-8 h-8 bg-gray-200 rounded-full'></span>
-            )}
-          </Link>
-            <input 
-              className='flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-200'
-              type='text'
-              placeholder='Add a comment'
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            <button
-              type='button'
-              className='bg-red-500 block lg:inline-block w-full lg:w-auto text-white rounded-xl px-6 py-2 font-semibold text-base outline-none'
-              onClick={addComment}
-            >
-              {addingComment ? 'Posting the comment...' : 'Post'}
-            </button>
+            {user && (
+              <>
+              
+              <Link 
+                to={`/user-profile/${user?._id}`}
+                className='flex gap-2 items-center justify-start bg-gray-100 max-w-max p-3 rounded-full mb-4'
+                >
+                  <img 
+                      className='w-8 h-8 cursor-pointer rounded-full object-contain'
+                      src={user?.image}
+                      alt='user-profile'
+                  />
+              </Link>
+                <input 
+                  className='flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-200'
+                  type='text'
+                  placeholder='Add a comment'
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+                <button
+                  type='button'
+                  className='bg-red-500 block lg:inline-block w-full lg:w-auto text-white rounded-xl px-6 py-2 font-semibold text-base outline-none'
+                  onClick={addComment}
+                >
+                  {addingComment ? 'Posting the comment...' : 'Post'}
+                </button>
+              </>
+            )
+            }
           </div>
           </div>
       </div>
     
       <h2 className='text-center font-bold text-2xl mt-8 mb-4'>
-        More like this
+       {pins?.length > 0 &&  'More like this' }
       </h2>
       {
         pins?.length > 0 ? (
@@ -173,7 +175,7 @@ const PinDetail = ({ user }) => {
             <MasonryLayout  pins={pins} />
           </div>
         ): (
-          <Spinner message='Loading more Pins...' />
+          <MasonSkeleton />
         )
       }
     </>

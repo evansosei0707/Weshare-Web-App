@@ -8,7 +8,7 @@ export const client = createClient({
     dataset: 'production',
     apiVersion: '2023-11-15',
     useCdn: true, 
-    token: "sktomCAR6SuSRtPjxBNcJJYjxz3SBu9hqADfHcMEGd20NrcZ6fpDeUmRwevySVPfwvmqMhQxUvFaD4vn6M5Hoa24DHJnULHoZVONaDIHdHN1ix0mMgCiG85e3K12v6El1u4qlE4mv3mFWFYqpE731jUKm4p9klowXW0O6VKZCFcL2AOtdTyD"
+    token: import.meta.env.VITE_APP_TOKEN,
 })
 
 const builder = imageUrlBuilder(client);

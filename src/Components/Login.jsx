@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import { useUserContext } from '../Context/user_context';
 import shareVideo from '../assets/share.mp4';

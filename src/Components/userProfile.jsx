@@ -6,8 +6,8 @@ import { useUserContext } from '../Context/user_context';
 
 import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../utils/data';
 import { client } from '../client';
-import MasonryLayout from './MasonryLayout';
-import Spinner from './Spinner';
+import { MasonSkeleton, MasonryLayout } from '../Components';
+
 
 const randomImage = 'https://source.unsplash.com/1600x900?nature,photography,technology';
 
@@ -58,7 +58,7 @@ const UserProfile = () => {
 
 
   if(!user) {
-    return <Spinner message='Loading profile...' />
+    return <MasonSkeleton />
   }
 
   return (
@@ -84,12 +84,12 @@ const UserProfile = () => {
                 className='bg-white p-2 rounded-full cursor-pointer outline-none shadow-md'
                 onClick={() => {
                   localStorage.clear()
-                  navigate('/login')
                   logout({ 
                     logoutParams: {
-                    returnTo: window.location.origin
+                      returnTo: window.location.origin
                     }
-                    });
+                  });
+                  navigate('/login')
                 }}>
                   <AiOutlineLogout color="red" fontSize={21}/>
                 </button>
